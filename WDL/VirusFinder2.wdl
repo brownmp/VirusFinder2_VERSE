@@ -67,7 +67,7 @@ task MakeHumanIndex {
 
     runtime {
         preemptible: preemptible
-        disks: "local-disk " + ceil(size(Virus_Reference, "GB") ) + " HDD"
+        disks: "local-disk " + ceil(size(Human_Reference, "GB") ) + " HDD"
         docker: docker
         cpu: cpus
         memory: "10GB"
