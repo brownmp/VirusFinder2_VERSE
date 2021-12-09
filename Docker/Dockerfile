@@ -34,15 +34,29 @@ RUN apt-get -qq update && apt-get -qq -y install --no-install-recommends \
     python \
     python-pip \
     python-setuptools \
-    python3-pip \
     r-base \
     unzip \
     wget \
     x11-common \
     zlib1g \
     zlib1g-dev \
-    zlibc \
-    cpanminus
+    zlibc 
+
+RUN apt-get update --yes && apt-get install \
+    libbz2-dev \
+    cpanminus \
+    libexpat1-dev \
+    python3-pip \
+    libncurses5-dev \
+    bioperl \
+    bioperl-run \
+    --yes && apt-get clean all
+    
+    #cpanminus \
+    #samtools \
+    #libexpat1-dev \
+    #libncurses5-dev \
+    #liblzma-dev
 
 
 
@@ -57,20 +71,30 @@ ENV BIN /usr/local/bin
 #~~~~~~~~~~~
 ## Samtools
 #~~~~~~~~~~~
+#WORKDIR $SRC
+#ENV SAMTOOLS_VERSION=1.14
+#RUN SAMTOOLS_URL="https://github.com/samtools/samtools/releases/download/${SAMTOOLS_VERSION}/samtools-${SAMTOOLS_VERSION}.tar.bz2" && \
+#    cd $SRC && \
+#    wget $SAMTOOLS_URL && \
+#    tar xf samtools-${SAMTOOLS_VERSION}.tar.bz2 && \
+#    cd samtools-${SAMTOOLS_VERSION}/htslib-${SAMTOOLS_VERSION} && ./configure && make && make install && \
+#    cd ../ && ./configure --without-curses && make && make install && \
+#    rm $SRC/samtools-${SAMTOOLS_VERSION}.tar.bz2 && \
+#    rm -r $SRC/samtools-${SAMTOOLS_VERSION}
+#ENV SAMTOOLS=/usr/local/bin/samtools/
+
 WORKDIR $SRC
-ENV SAMTOOLS_VERSION=1.12
-RUN SAMTOOLS_URL="https://github.com/samtools/samtools/releases/download/${SAMTOOLS_VERSION}/samtools-${SAMTOOLS_VERSION}.tar.bz2" && \
-    cd $SRC && \
-    wget $SAMTOOLS_URL && \
-    tar xf samtools-${SAMTOOLS_VERSION}.tar.bz2 && \
-    cd samtools-${SAMTOOLS_VERSION}/htslib-${SAMTOOLS_VERSION} && ./configure && make && make install && \
-    cd ../ && ./configure --without-curses && make && make install && \
-    rm $SRC/samtools-${SAMTOOLS_VERSION}.tar.bz2 && rm -r $SRC/samtools-${SAMTOOLS_VERSION}
+RUN wget http://sourceforge.net/projects/samtools/files/samtools/0.1.18/samtools-0.1.18.tar.bz2 && \
+    tar xjf samtools-0.1.18.tar.bz2 && \
+    cd samtools-0.1.18 && \
+    make && \
+    env SAMTOOLS=/usr/local/src/samtools-0.1.18/samtools
 
 
 #~~~~~~~~~~~
 ## Bedtools
 #~~~~~~~~~~~
+WORKDIR $SRC
 RUN wget -q https://github.com/arq5x/bedtools2/releases/download/v2.30.0/bedtools-2.30.0.tar.gz && \
    tar xf bedtools-2.30.0.tar.gz && \
    cd bedtools2 && \
@@ -81,6 +105,7 @@ RUN wget -q https://github.com/arq5x/bedtools2/releases/download/v2.30.0/bedtool
 #~~~~~~~~~~~~~~
 # BWA
 #~~~~~~~~~~~~~~
+WORKDIR $SRC
 RUN git clone https://github.com/lh3/bwa.git && \
     cd bwa && \
     make && \

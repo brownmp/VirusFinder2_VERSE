@@ -2,7 +2,7 @@
 ## Input data can be: (a) an alignment file (in BAM format); or (b) FASTQ file(s) (preferred) – for
 ## single end data, “fastq1” is required; for paired-end, both “fastq1” and “fastq2” are needed.
 ##########################################
-#alignment_file = /scratch/kingw/virusFinder/simulation/simulation..bam
+# alignment_file = /scratch/kingw/virusFinder/simulation/simulation..bam
 fastq1 = seq_1.fastq.gz
 fastq2 = seq_2.fastq.gz
 detect_integration = yes # if ‘no’ is provided, step (3), virus integration detection, will be skipped
@@ -22,10 +22,10 @@ SVDetect_dir = /usr/local/scr/SVDetect_r0.8
 ##########################################
 ## Reference files (indexed for Bowtie2 and BLAST)
 ##########################################
-virus_database = /usr/local/src/ref/virus.fa
-bowtie_index_human = /usr/local/src/ref/hg19
-blastn_index_human = /usr/local/src/ref/hg19
-blastn_index_virus = /usr/local/src/ref/virus
+virus_database = virus.fa
+bowtie_index_human = GRCh38.genome
+blastn_index_human = GRCh38.genome
+blastn_index_virus = virus
 
 ##########################################
 ## Parameters of virus insertion detection (VERSE algorithm). They are ignored for single-end data
