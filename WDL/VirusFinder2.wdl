@@ -141,7 +141,7 @@ workflow VirusFinder2 {
         # FASTQ Files
         #~~~~~~~~~~~~
         File left
-        File? rights
+        File? right
 
         #~~~~~~~~~~~~
         # CPU count 
