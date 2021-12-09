@@ -50,6 +50,7 @@ RUN apt-get update --yes && apt-get install \
     libncurses5-dev \
     bioperl \
     bioperl-run \
+    libbam-dev \
     --yes && apt-get clean all
     
     #cpanminus \
@@ -68,40 +69,6 @@ ENV BIN /usr/local/bin
 
 
 
-#~~~~~~~~~~~
-## Samtools
-#~~~~~~~~~~~
-#WORKDIR $SRC
-#ENV SAMTOOLS_VERSION=1.14
-#RUN SAMTOOLS_URL="https://github.com/samtools/samtools/releases/download/${SAMTOOLS_VERSION}/samtools-${SAMTOOLS_VERSION}.tar.bz2" && \
-#    cd $SRC && \
-#    wget $SAMTOOLS_URL && \
-#    tar xf samtools-${SAMTOOLS_VERSION}.tar.bz2 && \
-#    cd samtools-${SAMTOOLS_VERSION}/htslib-${SAMTOOLS_VERSION} && ./configure && make && make install && \
-#    cd ../ && ./configure --without-curses && make && make install && \
-#    rm $SRC/samtools-${SAMTOOLS_VERSION}.tar.bz2 && \
-#    rm -r $SRC/samtools-${SAMTOOLS_VERSION}
-#ENV SAMTOOLS=/usr/local/bin/samtools/
-
-WORKDIR $SRC
-RUN wget http://sourceforge.net/projects/samtools/files/samtools/0.1.18/samtools-0.1.18.tar.bz2 && \
-    tar xjf samtools-0.1.18.tar.bz2 && \
-    cd samtools-0.1.18 && \
-    make && \
-    env SAMTOOLS=/usr/local/src/samtools-0.1.18/samtools
-
-
-#~~~~~~~~~~~
-## Bedtools
-#~~~~~~~~~~~
-WORKDIR $SRC
-RUN wget -q https://github.com/arq5x/bedtools2/releases/download/v2.30.0/bedtools-2.30.0.tar.gz && \
-   tar xf bedtools-2.30.0.tar.gz && \
-   cd bedtools2 && \
-   make && \
-   cp bin/* $BIN/ && \
-   rm $SRC/bedtools-2.30.0.tar.gz && rm -r $SRC/bedtools2
-
 #~~~~~~~~~~~~~~
 # BWA
 #~~~~~~~~~~~~~~
@@ -114,17 +81,6 @@ RUN git clone https://github.com/lh3/bwa.git && \
     rm -r bwa
 
 
-#~~~~~~~~~~~~~~
-# BowTie2
-#~~~~~~~~~~~~~~
-WORKDIR $SRC
-ENV Bowtie2_VERSION=2.4.4
-
-RUN wget https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.4.4/bowtie2-2.4.4-source.zip && \
-    unzip bowtie2-2.4.4-source.zip && \
-    cd bowtie2-2.4.4 && \
-    make && \
-    cp -r * $BIN
 
 
 
@@ -146,11 +102,24 @@ RUN wget https://sourceforge.net/projects/svdetect/files/SVDetect/0.80/SVDetect_
     rm SVDetect_r0.8b.tar.gz
 
 
+#~~~~~~~~~~~
+## Samtools
+#~~~~~~~~~~~
+# Have to install an onlder version of samtools for Bio::DB::Sam
+
+WORKDIR $SRC
+RUN wget http://sourceforge.net/projects/samtools/files/samtools/0.1.17/samtools-0.1.17.tar.bz2 && \
+    tar xjf samtools-0.1.17.tar.bz2 && \
+    cd samtools-0.1.17 && \
+    make clean && \
+    env SAMTOOLS=/usr/local/src/samtools-0.1.17
+ENV SAMTOOLS=/usr/local/src/samtools-0.1.17
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## Perl
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#WORKDIR $SRC
-#RUN cpanm --notest Config::General Tie::IxHash Parallel::ForkManager Bio::SeqIO Bio::DB::Sam
+WORKDIR $SRC
+RUN cpanm --notest Config::General Tie::IxHash Parallel::ForkManager Bio::SeqIO Bio::DB::Sam
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -181,6 +150,29 @@ RUN wget https://github.com/gmarcais/Jellyfish/releases/download/v2.3.0/jellyfis
 # RUN wget https://s3.amazonaws.com/changseq/kqu/rins/rins.tar.gz \
 
 
+
+#~~~~~~~~~~~
+## Bedtools
+#~~~~~~~~~~~
+WORKDIR $SRC
+RUN wget -q https://github.com/arq5x/bedtools2/releases/download/v2.30.0/bedtools-2.30.0.tar.gz && \
+   tar xf bedtools-2.30.0.tar.gz && \
+   cd bedtools2 && \
+   make && \
+   cp bin/* $BIN/ && \
+   rm $SRC/bedtools-2.30.0.tar.gz && rm -r $SRC/bedtools2
+
+#~~~~~~~~~~~~~~
+# BowTie2
+#~~~~~~~~~~~~~~
+WORKDIR $SRC
+ENV Bowtie2_VERSION=2.4.4
+
+RUN wget https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.4.4/bowtie2-2.4.4-source.zip && \
+    unzip bowtie2-2.4.4-source.zip && \
+    cd bowtie2-2.4.4 && \
+    make && \
+    cp -r * $BIN
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## VirusFinder2

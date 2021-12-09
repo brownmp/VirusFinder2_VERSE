@@ -1,0 +1,13 @@
+{
+        "VirusFinder2.docker":"brownmp/virusfinder2:devel",
+        "VirusFinder2.left":"",
+        "VirusFinder2.right":"",
+        "VirusFinder2.cpus":"10",
+        "VirusFinder2.Virus_Reference":"",
+        "VirusFinder2.Human_Reference":"human_reference/GRCh38.tar.gz",
+        "VirusFinder2.GTF_Reference":"human_reference/ref_annot.gtf",
+        "VirusFinder2.preemptible":"2",
+        "VirusFinder2.sample_id":"",
+        "VirusFinder2.Distance":"200"
+
+}

@@ -8,7 +8,7 @@ version 1.0
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 task MakeVirusDataBase {
     input {
-        File virus_fa
+        File Virus_Reference
 
         Int cpus
         Int preemptible
@@ -19,7 +19,11 @@ task MakeVirusDataBase {
 
     command <<<
         set -e
-        makeblastdb -in ~{virus_fa} -dbtype nucl -out virus
+
+        # Untar the references  
+        tar -xvf ~{Virus_Reference}
+
+        makeblastdb -in virus.fa -dbtype nucl -out virus
     >>>
 
     output {
@@ -28,7 +32,7 @@ task MakeVirusDataBase {
 
     runtime {
         preemptible: preemptible
-        disks: "local-disk " + ceil(size(virus_fa, "GB") ) + " HDD"
+        disks: "local-disk " + ceil(size(Virus_Reference, "GB")*3 ) + " HDD"
         docker: docker
         cpu: cpus
         memory: "10GB"
@@ -40,7 +44,7 @@ task MakeVirusDataBase {
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 task MakeHumanIndex {
     input {
-        File human_ref
+        File Human_Reference
 
         Int cpus
         Int preemptible
@@ -49,8 +53,13 @@ task MakeHumanIndex {
     }
 
     command <<<
+
         set -e
-        makeblastdb -in ~{human_ref} -dbtype nucl -out human
+
+        # Untar the references  
+        tar -xvf ~{Human_Reference}
+
+        makeblastdb -in GRCh38.genome.fa -dbtype nucl -out GRCh38.genome
     >>>
 
     output {
@@ -58,7 +67,7 @@ task MakeHumanIndex {
 
     runtime {
         preemptible: preemptible
-        disks: "local-disk " + ceil(size(virus_fa, "GB") ) + " HDD"
+        disks: "local-disk " + ceil(size(Virus_Reference, "GB") ) + " HDD"
         docker: docker
         cpu: cpus
         memory: "10GB"
@@ -76,7 +85,7 @@ task RunVirusFinder {
         File? fastq2
 
         File Human_Reference
-        File virus_ref
+        File Virus_Reference
 
         Int cpus
         Int preemptible
@@ -107,7 +116,7 @@ task RunVirusFinder {
 
     runtime {
         preemptible: preemptible
-        disks: "local-disk " + ceil(size(virus_fa, "GB") ) + " HDD"
+        disks: "local-disk " + ceil(size(Virus_Reference, "GB")*4 ) + " HDD"
         docker: docker
         cpu: cpus
         memory: "10GB"
@@ -147,9 +156,9 @@ workflow VirusFinder2 {
         File GTF_Reference
 
         #~~~~~~~~~~~~
-        # References
+        # Configuration File 
         #~~~~~~~~~~~~
-        #File ref_fasta
+        File Configuration
 
         #~~~~~~~~~~~~
         # general runtime settings
@@ -171,7 +180,7 @@ workflow VirusFinder2 {
 
     call MakeVirusDataBase{
         input:
-            virus_fa = Virus_Reference, 
+            Virus_Reference = Virus_Reference, 
             
             cpus            = cpus,
             preemptible     = preemptible,
