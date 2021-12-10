@@ -200,7 +200,7 @@ workflow VirusFinder2 {
 
     call MakeHumanIndex{
         input:
-            Virus_Reference = Human_Reference, 
+            Human_Reference = Human_Reference, 
             
             cpus            = cpus,
             preemptible     = preemptible,
