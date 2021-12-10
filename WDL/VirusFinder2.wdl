@@ -69,11 +69,6 @@ task MakeHumanIndex {
         cd ..
 
         tar -czvf human_reference.tar.gz human_reference
-
-        /usr/local/src/VirusFinder2.0/VirusFinder.pl \
-            -c configuration.txt
-
-
     >>>
 
     output {
@@ -131,9 +126,13 @@ task RunVirusFinder {
                 --fastq2 $fastqs[1]
         fi
 
+        /usr/local/src/VirusFinder2.0/VirusFinder.pl \
+            -c configuration.txt
+
     >>>
 
     output {
+        File configuration = "configuration.txt"
     }
 
     runtime {
