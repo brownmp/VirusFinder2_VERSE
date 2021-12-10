@@ -16,18 +16,17 @@ task MakeVirusDataBase {
         String sample_id
 
     }
-
     command <<<
         set -e
 
         # Untar the references  
         tar -xvf ~{Virus_Reference}
 
+        # Make blast DB
         makeblastdb -in virus.fa -dbtype nucl -out virus
     >>>
 
     output {
-
     }
 
     runtime {
@@ -42,6 +41,7 @@ task MakeVirusDataBase {
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Index human reference 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Make the BLAST inex for the human genome 
 task MakeHumanIndex {
     input {
         File Human_Reference
@@ -55,14 +55,24 @@ task MakeHumanIndex {
     command <<<
 
         set -e
+        
+        # make directory for the human reference 
+        mkdir human_reference
 
         # Untar the references  
-        tar -xvf ~{Human_Reference}
+        tar -xvf ~{Human_Reference} --directory human_reference/
 
+        cd human_reference
+        # Make Blast DB
         makeblastdb -in GRCh38.genome.fa -dbtype nucl -out GRCh38.genome
+
+        cd ..
+
+        tar -czvf human_reference.tar.gz human_reference
     >>>
 
     output {
+        File human_reference = "human_reference.tar.gz"
     }
 
     runtime {
@@ -178,7 +188,17 @@ workflow VirusFinder2 {
     }
 
 
-    call MakeVirusDataBase{
+    #call MakeVirusDataBase{
+    #    input:
+    #        Virus_Reference = Virus_Reference, 
+    #        
+    #        cpus            = cpus,
+    #        preemptible     = preemptible,
+    #        docker          = docker,
+    #        sample_id       = sample_id
+    #}
+
+    call MakeHumanIndex{
         input:
             Virus_Reference = Virus_Reference, 
             
