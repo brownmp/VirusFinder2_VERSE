@@ -69,6 +69,11 @@ task MakeHumanIndex {
         cd ..
 
         tar -czvf human_reference.tar.gz human_reference
+
+        /usr/local/src/VirusFinder2.0/VirusFinder.pl \
+            -c configuration.txt
+
+
     >>>
 
     output {
