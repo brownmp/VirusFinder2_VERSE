@@ -220,7 +220,7 @@ workflow VirusFinder2 {
             fastq1 = left,
             fastq2 = right,
 
-            Human_Reference = MakeHumanIndex.Human_Reference,
+            Human_Reference = MakeHumanIndex.human_reference,
             Virus_Reference = Virus_Reference,
             
             cpus            = cpus,
