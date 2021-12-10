@@ -126,6 +126,9 @@ task RunVirusFinder {
                 --fastq2 $fastqs[1]
         fi
 
+        #~~~~~~~~~~~~~~~~~~~~~~~~
+        # Run Virus Finder 2
+        #~~~~~~~~~~~~~~~~~~~~~~~~
         /usr/local/src/VirusFinder2.0/VirusFinder.pl \
             -c configuration.txt
 
