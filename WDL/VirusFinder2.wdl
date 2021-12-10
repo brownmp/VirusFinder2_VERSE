@@ -216,7 +216,7 @@ workflow VirusFinder2 {
     }
 
     call RunVirusFinder {
-        input {
+        input:
             fastq1 = left,
             fastq2 = right,
 
