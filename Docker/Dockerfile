@@ -177,8 +177,9 @@ RUN wget https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.4.4/bowtie2
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## VirusFinder2
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 WORKDIR $SRC
+RUN git clone https://github.com/brownmp/VirusFinder2_VERSE.git
+
 RUN wget https://bioinfo.uth.edu/VirusFinder/VirusFinder-2.0.tgz && \
     tar xf VirusFinder-2.0.tgz && \
     rm VirusFinder-2.0.tgz

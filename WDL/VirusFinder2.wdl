@@ -119,6 +119,12 @@ task RunVirusFinder {
         # Untar the references  
         tar -xvf ~{Human_Reference}
         tar -xvf ~{Virus_Reference}
+
+
+        write_configuration_file.py \
+            --fastq1 fastq1 \
+            --fastq2 fastq2
+
     >>>
 
     output {
