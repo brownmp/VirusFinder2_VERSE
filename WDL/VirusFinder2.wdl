@@ -120,10 +120,12 @@ task RunVirusFinder {
         tar -xvf ~{Human_Reference}
         tar -xvf ~{Virus_Reference}
 
-
-        write_configuration_file.py \
-            --fastq1 fastq1 \
-            --fastq2 fastq2
+        #~~~~~~~~~~~~~~~~~~~~~~~
+        # Write the configuration file
+        #~~~~~~~~~~~~~~~~~~~~~~~
+        /usr/local/src/VirusFinder2_VERSE/write_configuration_file.py \
+            --fastq1 $fastq1 \
+            --fastq2 $fastq2
 
     >>>
 
