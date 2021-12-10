@@ -215,7 +215,7 @@ workflow VirusFinder2 {
             sample_id       = sample_id
     }
 
-    task RunVirusFinder {
+    call RunVirusFinder {
         input {
             fastq1 = left,
             fastq2 = right,
