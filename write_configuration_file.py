@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 
 ####################
@@ -47,17 +48,36 @@ def main():
     args = parser.parse_args()
 
 
+    fastq1 = args.fastq1
+    fastq2 = args.fastq2
+    detect_integration = args.detect_integration
+    detect_mutation = args.detect_mutation
+    mailto = args.mailto
+    thread_no = args.thread_no
+    virus_database = args.virus_database
+    bowtie_index_human = args.bowtie_index_human
+    blastn_index_human = args.blastn_index_human
+    blastn_index_virus = args.blastn_index_virus
+    detection_mode = args.detection_mode
+    flank_region_size = args.flank_region_size
+    sensitivity_level = args.sensitivity_level
+    min_contig_length = args.min_contig_length
+    blastn_evalue_thrd = args.blastn_evalue_thrd
+    similarity_thrd = args.similarity_thrd
+    chop_read_length = args.chop_read_length
+    minIdentity = args.minIdentity
+
     a = f"""##########################################
     ## Input data can be: (a) an alignment file (in BAM format); or (b) FASTQ file(s) (preferred) – for
     ## single end data, “fastq1” is required; for paired-end, both “fastq1” and “fastq2” are needed.
     ##########################################
     # alignment_file = /scratch/kingw/virusFinder/simulation/simulation..bam
-    fastq1 = {args.fastq1}
-    fastq2 = {args.fastq2}
-    detect_integration = {args.detect_integration}
-    detect_mutation = {args.detect_mutation}
-    mailto = {args.mailto}
-    thread_no = {args.thread_no}
+    fastq1 = {fastq1}
+    fastq2 = {fastq2}
+    detect_integration = {detect_integration}
+    detect_mutation = {detect_mutation}
+    mailto = {mailto}
+    thread_no = {thread_no}
 
     ##########################################
     ## The full paths to the following third-party tools are required by VirusFinder:
@@ -71,29 +91,29 @@ def main():
     ##########################################
     ## Reference files (indexed for Bowtie2 and BLAST)
     ##########################################
-    virus_database = {args.virus_database}
-    bowtie_index_human = {args.bowtie_index_human}
-    blastn_index_human = {args.blastn_index_human}
-    blastn_index_virus = {args.blastn_index_virus}
+    virus_database = {virus_database}
+    bowtie_index_human = {bowtie_index_human}
+    blastn_index_human = {blastn_index_human}
+    blastn_index_virus = {blastn_index_virus}
 
     ##########################################
     ## Parameters of virus insertion detection (VERSE algorithm). They are ignored for single-end data
     ##########################################
-    detection_mode = {args.detection_mode}
+    detection_mode = {detection_mode}
     #If not specified, VirusFinder runs in normal detection mode.
-    flank_region_size = {args.flank_region_size}
+    flank_region_size = {flank_region_size}
     #normal, it (and ‘sensitivity_level’ below) will be ignored.
-    sensitivity_level = {args.sensitivity_level}
+    sensitivity_level = {sensitivity_level}
     #sensitivity, and accordingly more computation time.
 
     ##########################################
     ## Parameters of virus detection. Smaller “min_contig_length”, higher sensitivity
     ##########################################
-    min_contig_length = {args.min_contig_length}
-    blastn_evalue_thrd = {args.blastn_evalue_thrd}
-    similarity_thrd = {args.similarity_thrd}
-    chop_read_length = {args.chop_read_length}
-    minIdentity = {args.minIdentity}
+    min_contig_length = {min_contig_length}
+    blastn_evalue_thrd = {blastn_evalue_thrd}
+    similarity_thrd = {similarity_thrd}
+    chop_read_length = {chop_read_length}
+    minIdentity = {minIdentity}
     """
 
     print("#~~~~~~~~~~~~~~~~~~~~~~~~\nWriting Configuration file\n#~~~~~~~~~~~~~~~~~~~~~~~~")
