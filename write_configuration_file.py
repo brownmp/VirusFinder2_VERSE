@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 
 ####################
@@ -97,7 +96,7 @@ def main():
     minIdentity = {args.minIdentity}
     """
 
-    print("#~~~~~~~~~~~~~~~~~~~~~~~~\nWriting Configuration file#~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("#~~~~~~~~~~~~~~~~~~~~~~~~\nWriting Configuration file\n#~~~~~~~~~~~~~~~~~~~~~~~~")
     output_file = open("configuration.txt", "w")
     output_file.write(a)
     output_file.close()
