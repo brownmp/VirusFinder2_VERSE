@@ -255,7 +255,7 @@ workflow VirusFinder2 {
                 sample_id       = sample_id
         }
 
-        call RunVirusFinder {
+        call RunVirusFinder as RunVirusFinder_references{
             input:
                 fastq1 = left,
                 fastq2 = right,
@@ -273,7 +273,7 @@ workflow VirusFinder2 {
     #########################
     # run using given references 
     #########################
-    call RunVirusFinder {
+    call RunVirusFinder as RunVirusFinder{
         input:
             fastq1 = left,
             fastq2 = right,
