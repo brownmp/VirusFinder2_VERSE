@@ -20,7 +20,10 @@ task MakeVirusDataBase {
         set -e
 
         # Untar the references  
-        tar -xvf ~{Virus_Reference}
+        mkdir virus_reference
+        tar -xvf ~{Virus_Reference} --directory virus_reference/
+
+        cd virus_reference/
 
         # Make blast DB
         makeblastdb \
