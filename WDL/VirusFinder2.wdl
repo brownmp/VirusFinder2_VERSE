@@ -23,10 +23,19 @@ task MakeVirusDataBase {
         tar -xvf ~{Virus_Reference}
 
         # Make blast DB
-        makeblastdb -in virus.fa -dbtype nucl -out virus
+        makeblastdb \
+            -in virus.fa \
+            -dbtype nucl \
+            -out virus
+
+        cd ..
+
+        tar -czvf virus_reference.tar.gz virus_reference
     >>>
 
     output {
+        File virus_reference = "virus_reference.tar.gz"
+            
     }
 
     runtime {
@@ -62,9 +71,14 @@ task MakeHumanIndex {
         # Untar the references  
         tar -xvf ~{Human_Reference} --directory human_reference/
 
-        cd human_reference
+        #~~~~~~~~~~~~~~~~
         # Make Blast DB
-        makeblastdb -in GRCh38.genome.fa -dbtype nucl -out GRCh38.genome
+        #~~~~~~~~~~~~~~~~
+        cd human_reference
+        makeblastdb \
+            -in GRCh38.genome.fa \
+            -dbtype nucl \
+            -out GRCh38.genome
 
         cd ..
 
@@ -124,6 +138,13 @@ task RunVirusFinder {
             /usr/local/src/VirusFinder2_VERSE/write_configuration_file.py \
                 --fastq1 $fastqs[0] \
                 --fastq2 $fastqs[1]
+        else 
+            #~~~~~~~~~~~~~~~~~~~~~~~
+            # Write the configuration file
+            #~~~~~~~~~~~~~~~~~~~~~~~
+            /usr/local/src/VirusFinder2_VERSE/write_configuration_file.py \
+                --fastq1 ~{fastq1} \
+                --fastq2 ~{fastq2}
         fi
 
         #~~~~~~~~~~~~~~~~~~~~~~~~
@@ -202,15 +223,15 @@ workflow VirusFinder2 {
     }
 
 
-    #call MakeVirusDataBase{
-    #    input:
-    #        Virus_Reference = Virus_Reference, 
-    #        
-    #        cpus            = cpus,
-    #        preemptible     = preemptible,
-    #        docker          = docker,
-    #        sample_id       = sample_id
-    #}
+    call MakeVirusDataBase{
+        input:
+            Virus_Reference = Virus_Reference, 
+            
+            cpus            = cpus,
+            preemptible     = preemptible,
+            docker          = docker,
+            sample_id       = sample_id
+    }
 
     call MakeHumanIndex{
         input:
@@ -228,7 +249,7 @@ workflow VirusFinder2 {
             fastq2 = right,
 
             Human_Reference = MakeHumanIndex.human_reference,
-            Virus_Reference = Virus_Reference,
+            Virus_Reference = MakeVirusDataBase.virus_reference,
             
             cpus            = cpus,
             preemptible     = preemptible,
