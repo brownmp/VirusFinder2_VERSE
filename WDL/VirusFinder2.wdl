@@ -208,6 +208,11 @@ workflow VirusFinder2 {
         #~~~~~~~~~~~~
         File Configuration
 
+        #~~~~~~~~~~~~~~
+        # If need to create BLAST index for references 
+        #~~~~~~~~~~~~~~
+        Boolean create_references
+
         #~~~~~~~~~~~~
         # general runtime settings
         #~~~~~~~~~~~~
@@ -226,40 +231,60 @@ workflow VirusFinder2 {
     }
 
 
-    call MakeVirusDataBase{
-        input:
-            Virus_Reference = Virus_Reference, 
-            
-            cpus            = cpus,
-            preemptible     = preemptible,
-            docker          = docker,
-            sample_id       = sample_id
+    #########################
+    # Create the blast references 
+    #########################
+    if(create_references) {
+        call MakeVirusDataBase{
+            input:
+                Virus_Reference = Virus_Reference, 
+                
+                cpus            = cpus,
+                preemptible     = preemptible,
+                docker          = docker,
+                sample_id       = sample_id
+        }
+
+        call MakeHumanIndex{
+            input:
+                Human_Reference = Human_Reference, 
+                
+                cpus            = cpus,
+                preemptible     = preemptible,
+                docker          = docker,
+                sample_id       = sample_id
+        }
+
+        call RunVirusFinder {
+            input:
+                fastq1 = left,
+                fastq2 = right,
+
+                Human_Reference = MakeHumanIndex.human_reference,
+                Virus_Reference = MakeVirusDataBase.virus_reference,
+                
+                cpus            = cpus,
+                preemptible     = preemptible,
+                docker          = docker,
+                sample_id       = sample_id
+        }
     }
 
-    call MakeHumanIndex{
-        input:
-            Human_Reference = Human_Reference, 
-            
-            cpus            = cpus,
-            preemptible     = preemptible,
-            docker          = docker,
-            sample_id       = sample_id
-    }
-
+    #########################
+    # run using given references 
+    #########################
     call RunVirusFinder {
         input:
             fastq1 = left,
             fastq2 = right,
 
-            Human_Reference = MakeHumanIndex.human_reference,
-            Virus_Reference = MakeVirusDataBase.virus_reference,
+            Human_Reference = Human_Reference,
+            Virus_Reference = Virus_Reference,
             
             cpus            = cpus,
             preemptible     = preemptible,
             docker          = docker,
             sample_id       = sample_id
     }
-
-    
 }
 

@@ -98,7 +98,7 @@ def main():
     """
 
     print("#~~~~~~~~~~~~~~~~~~~~~~~~\nWriting Configuration file#~~~~~~~~~~~~~~~~~~~~~~~~")
-    output_file = open("test_configuration.txt", "w")
+    output_file = open("configuration.txt", "w")
     output_file.write(a)
     output_file.close()
 
