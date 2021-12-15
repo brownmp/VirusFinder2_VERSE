@@ -30,10 +30,10 @@ def main():
     # parser.add_argument('--trinity_script', required = False, default = "/usr/local/bin/trinityrnaseq_r2012-06-08/Trinity.pl", help = "")
     # parser.add_argument('--SVDetect_dir', required = False, default = "/usr/local/scr/SVDetect_r0.8", help = "")
 
-    parser.add_argument('--virus_database', required = False, default = "./virus_reference/virus.fa", help = "")
-    parser.add_argument('--bowtie_index_human', required = False, default = "./human_reference/GRCh38.genome", help = "")
-    parser.add_argument('--blastn_index_human', required = False, default = "./human_reference/GRCh38.genome", help = "")
-    parser.add_argument('--blastn_index_virus', required = False, default = "./virus_reference/virus", help = "")
+    parser.add_argument('--virus_database', required = False, default = "/virus_reference/virus.fa", help = "")
+    parser.add_argument('--bowtie_index_human', required = False, default = "/human_reference/GRCh38.genome", help = "")
+    parser.add_argument('--blastn_index_human', required = False, default = "/human_reference/GRCh38.genome", help = "")
+    parser.add_argument('--blastn_index_virus', required = False, default = "/virus_reference/virus", help = "")
 
     parser.add_argument('--detection_mode', required = False, default = "normal", help = "Possible values: {normal, sensitive}; default value: normal.")
     parser.add_argument('--flank_region_size', required = False, default = "4000", help = "Suggested values: >2000; default: 4000; if detection_mode =")
@@ -54,10 +54,16 @@ def main():
     detect_mutation = args.detect_mutation
     mailto = args.mailto
     thread_no = args.thread_no
-    virus_database = args.virus_database
-    bowtie_index_human = args.bowtie_index_human
-    blastn_index_human = args.blastn_index_human
-    blastn_index_virus = args.blastn_index_virus
+
+    # References 
+
+    cwd = os.getcwd()
+    virus_database = os.path.join(cwd, args.virus_database)
+    bowtie_index_human = os.path.join(cwd, args.bowtie_index_human)
+    blastn_index_human = os.path.join(cwd, args.blastn_index_human)
+    blastn_index_virus = os.path.join(cwd, args.blastn_index_virus)
+
+
     detection_mode = args.detection_mode
     flank_region_size = args.flank_region_size
     sensitivity_level = args.sensitivity_level
