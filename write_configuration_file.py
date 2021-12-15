@@ -90,7 +90,7 @@ def main():
     blastn_bin = /usr/local/src/ncbi-blast-2.2.26+/bin/blastn
     bowtie_bin = /usr/local/bin/bowtie2
     bwa_bin = /usr/local/bin/bwa
-    trinity_script = /usr/local/bin/trinityrnaseq_r2012-06-08/Trinity.pl
+    trinity_script = /usr/local/src/trinityrnaseq-v2.11.0/Trinity.pl
     SVDetect_dir = /usr/local/scr/SVDetect_r0.8
 
     ##########################################
