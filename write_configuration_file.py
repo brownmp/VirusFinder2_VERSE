@@ -58,11 +58,10 @@ def main():
 
     # References 
 
-    cwd = os.getcwd()
-    virus_database = os.path.join(cwd, args.virus_database)
-    bowtie_index_human = os.path.join(cwd, args.bowtie_index_human)
-    blastn_index_human = os.path.join(cwd, args.blastn_index_human)
-    blastn_index_virus = os.path.join(cwd, args.blastn_index_virus)
+    virus_database = args.virus_database
+    bowtie_index_human = args.bowtie_index_human
+    blastn_index_human = args.blastn_index_human
+    blastn_index_virus = args.blastn_index_virus
 
 
     detection_mode = args.detection_mode
