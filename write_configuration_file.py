@@ -57,7 +57,6 @@ def main():
     thread_no = args.thread_no
 
     # References 
-
     virus_database = args.virus_database
     bowtie_index_human = args.bowtie_index_human
     blastn_index_human = args.blastn_index_human
