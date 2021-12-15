@@ -30,10 +30,10 @@ def main():
     # parser.add_argument('--trinity_script', required = False, default = "/usr/local/bin/trinityrnaseq_r2012-06-08/Trinity.pl", help = "")
     # parser.add_argument('--SVDetect_dir', required = False, default = "/usr/local/scr/SVDetect_r0.8", help = "")
 
-    parser.add_argument('--virus_database', required = False, default = "virus_reference/virus.fa", help = "")
-    parser.add_argument('--bowtie_index_human', required = False, default = "human_reference/GRCh38.genome", help = "")
-    parser.add_argument('--blastn_index_human', required = False, default = "human_reference/GRCh38.genome", help = "")
-    parser.add_argument('--blastn_index_virus', required = False, default = "virus_reference/virus", help = "")
+    parser.add_argument('--virus_database', required = False, default = "./virus_reference/virus.fa", help = "")
+    parser.add_argument('--bowtie_index_human', required = False, default = "./human_reference/GRCh38.genome", help = "")
+    parser.add_argument('--blastn_index_human', required = False, default = "./human_reference/GRCh38.genome", help = "")
+    parser.add_argument('--blastn_index_virus', required = False, default = "./virus_reference/virus", help = "")
 
     parser.add_argument('--detection_mode', required = False, default = "normal", help = "Possible values: {normal, sensitive}; default value: normal.")
     parser.add_argument('--flank_region_size', required = False, default = "4000", help = "Suggested values: >2000; default: 4000; if detection_mode =")
