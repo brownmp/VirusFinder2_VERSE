@@ -203,11 +203,6 @@ workflow VirusFinder2 {
         File Human_Reference
         File GTF_Reference
 
-        #~~~~~~~~~~~~
-        # Configuration File 
-        #~~~~~~~~~~~~
-        File Configuration
-
         #~~~~~~~~~~~~~~
         # If need to create BLAST index for references 
         #~~~~~~~~~~~~~~
