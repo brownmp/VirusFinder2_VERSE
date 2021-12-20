@@ -168,10 +168,10 @@ task RunVirusFinder {
 
     runtime {
         preemptible: preemptible
-        disks: "local-disk " + ceil(size(Virus_Reference, "GB")*4 ) + " HDD"
+        disks: "local-disk " + ceil(size(Virus_Reference, "GB")*8 ) + " HDD"
         docker: docker
         cpu: cpus
-        memory: "10GB"
+        memory: "100GB"
     }
 }
 

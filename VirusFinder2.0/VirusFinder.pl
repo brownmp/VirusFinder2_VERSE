@@ -281,12 +281,12 @@ sub DetectIntegration {
     `ln -s $blastn_index_human.fa $output_dir/step3/hg19.fa`    if (!-e "$output_dir/step3/hg19.fa");
 
     if ($mode eq 'sensitive' && -e "$output_dir/step3/unmapped.2.fq"){
-        print "Running Sensative Mode"
+        print "Running Sensative Mode";
         RunSensitiveMode();
         `cp $output_dir/step3/virus-corrected-seq.fa $output_dir/virus-consensus-seq.fa`;
     }else{
-        print "Running NON-Sensative Mode"
-        print "perl $ILIBs $detect_integration_script -c $config_file -o $output_dir/step3"
+        print "Running NON-Sensative Mode";
+        print "perl $ILIBs $detect_integration_script -c $config_file -o $output_dir/step3";
         system("perl $ILIBs $detect_integration_script -c $config_file -o $output_dir/step3");
     }
 
