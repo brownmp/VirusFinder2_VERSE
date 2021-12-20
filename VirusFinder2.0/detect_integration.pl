@@ -248,10 +248,14 @@ if (!-e "hg19.fa"){
 $virus_sequence = "results-virus-top1.fa";
 
 if (!-e 'hg19+virus.fa'){
+    print "creating hg19+virus.fa";
+    print "cat hg19.fa $virus_sequence > hg19+virus.fa";
     `cat hg19.fa $virus_sequence > hg19+virus.fa`;
 }
 
 if (!-e 'hg19+virus.fa.bwt'){
+    print "bwa indexing hg19+virus.fa";
+    print "$bwa_bin index hg19+virus.fa 2> /dev/null";
     system("$bwa_bin index hg19+virus.fa 2> /dev/null");
 }
 

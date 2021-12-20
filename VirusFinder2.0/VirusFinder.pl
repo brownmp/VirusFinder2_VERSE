@@ -244,7 +244,7 @@ print "Done!\n";
 
 sub DetectIntegration {
 
-    print " Running DetectIntegration "
+    print " Running DetectIntegration ";
 
     if (!-e "$output_dir/step3"){
         `mkdir $output_dir/step3`;
