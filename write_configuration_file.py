@@ -61,10 +61,14 @@ def main():
 
     virus_database = os.path.join(cwd, args.virus_database)
     blastn_index_virus = os.path.join(cwd, args.blastn_index_virus)
-    bowtie_index_human = os.path.join(cwd, "human_reference/GRCh38.genome")
-    blastn_index_human = os.path.join(cwd, "human_reference/GRCh38.genome")
     # bowtie_index_human = os.path.join(cwd, args.bowtie_index_human)
     # blastn_index_human = os.path.join(cwd, args.blastn_index_human)
+
+
+    virus_database = os.path.join(cwd, "virus_reference/virus.fa")
+    blastn_index_virus = os.path.join(cwd, "virus_reference/virus")
+    bowtie_index_human = os.path.join(cwd, "human_reference/GRCh38.genome")
+    blastn_index_human = os.path.join(cwd, "human_reference/GRCh38.genome")
 
     print(bowtie_index_human)
     print(blastn_index_human)
