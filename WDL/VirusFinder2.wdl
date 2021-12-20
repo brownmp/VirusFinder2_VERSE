@@ -126,7 +126,7 @@ task RunVirusFinder {
 
         # Untar the references  
         tar -xvf ~{Human_Reference}
-        tar -xvf ~{Virus_Reference}
+        tar -xvf ~{Virus_Reference} --directory virus_reference
 
         # special case for tar of fastq files
         if [[ "~{fastq1}" == *.tar.gz ]] ; then
