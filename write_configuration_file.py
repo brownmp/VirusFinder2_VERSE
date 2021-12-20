@@ -89,7 +89,7 @@ def main():
     ##########################################
     ## The full paths to the following third-party tools are required by VirusFinder:
     ##########################################
-    blastn_bin = /usr/local/src/ncbi-blast-2.2.26+/bin/blastn
+    blastn_bin = /usr/local/src/ncbi-blast-2.11.0+/bin/blastn
     bowtie_bin = /usr/local/bin/bowtie2
     bwa_bin = /usr/local/bin/bwa
     trinity_script = /usr/local/src/trinityrnaseq_r2012-06-08/Trinity.pl
