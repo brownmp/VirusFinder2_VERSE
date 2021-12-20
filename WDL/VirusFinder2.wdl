@@ -72,13 +72,14 @@ task MakeHumanIndex {
         mkdir human_reference
 
         # Untar the references  
-        tar -xvf ~{Human_Reference} --directory human_reference/
+        tar -xvf ~{Human_Reference}
 
         #~~~~~~~~~~~~~~~~
         # Make Blast DB
         #~~~~~~~~~~~~~~~~
         cd human_reference
-        makeblastdb \
+
+        /usr/local/src/ncbi-blast-2.2.26+/bin/makeblastdb \
             -in GRCh38.genome.fa \
             -dbtype nucl \
             -out GRCh38.genome
@@ -153,7 +154,10 @@ task RunVirusFinder {
         #~~~~~~~~~~~~~~~~~~~~~~~~
         # Run Virus Finder 2
         #~~~~~~~~~~~~~~~~~~~~~~~~
-        /usr/local/src/VirusFinder2.0/VirusFinder.pl \
+        # For running downloaded version 
+        #/usr/local/src/VirusFinder2.0/VirusFinder.pl \
+        # For running commented version
+        /usr/local/src/VirusFinder2_VERSE/VirusFinder2.0/VirusFinder.pl \
             -c configuration.txt
 
     >>>
