@@ -61,9 +61,10 @@ def main():
 
     virus_database = os.path.join(cwd, args.virus_database)
     blastn_index_virus = os.path.join(cwd, args.blastn_index_virus)
-    bowtie_index_human = args.bowtie_index_human
+    # bowtie_index_human = args.bowtie_index_human
     # blastn_index_human = args.blastn_index_human
-    blastn_index_human = os.path.join(cwd, args.blastn_index_human)
+    bowtie_index_human = os.path.join(cwd, args.blastn_index_human, "GRCh38.genome")
+    blastn_index_human = os.path.join(cwd, args.blastn_index_human, "GRCh38.genome")
 
 
     detection_mode = args.detection_mode
