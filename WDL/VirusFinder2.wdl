@@ -127,6 +127,9 @@ task RunVirusFinder {
         # Untar the references  
         tar -xvf ~{Human_Reference}
         tar -xvf ~{Virus_Reference}
+        
+        current_directory=pwd 
+        human_reference=$current_directory/human_reference
 
         # special case for tar of fastq files
         if [[ "~{fastq1}" == *.tar.gz ]] ; then
@@ -148,7 +151,8 @@ task RunVirusFinder {
             #~~~~~~~~~~~~~~~~~~~~~~~
             python3 /usr/local/src/VirusFinder2_VERSE/write_configuration_file.py \
                 --fastq1 ~{fastq1} \
-                --fastq2 ~{fastq2}
+                --fastq2 ~{fastq2} \
+                --blastn_index_human ~{human_reference}
         fi
 
         #~~~~~~~~~~~~~~~~~~~~~~~~

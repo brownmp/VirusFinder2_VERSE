@@ -106,7 +106,7 @@ GetOptions
 );
 
 
-print "          detect_integration.pl              ";
+print "          detect_integration.pl              \n";
 
 if ($help) {
    print @usage;
@@ -238,7 +238,7 @@ chdir($output_dir);
 
 ################################ Align unmapped reads to hg19+virus.fa #######################################
 
-print "Align unmapped reads to hg19+virus.fa";
+print "Align unmapped reads to hg19+virus.fa\n";
 
 if (!-e "hg19.fa"){
     my $blastn_index_human = $config->get_value("blastn_index_human");
@@ -248,14 +248,14 @@ if (!-e "hg19.fa"){
 $virus_sequence = "results-virus-top1.fa";
 
 if (!-e 'hg19+virus.fa'){
-    print "creating hg19+virus.fa";
-    print "cat hg19.fa $virus_sequence > hg19+virus.fa";
+    print "creating hg19+virus.fa\n";
+    print "cat hg19.fa $virus_sequence > hg19+virus.fa\n";
     `cat hg19.fa $virus_sequence > hg19+virus.fa`;
 }
 
 if (!-e 'hg19+virus.fa.bwt'){
-    print "bwa indexing hg19+virus.fa";
-    print "$bwa_bin index hg19+virus.fa 2> /dev/null";
+    print "bwa indexing hg19+virus.fa\n";
+    print "$bwa_bin index hg19+virus.fa 2> /dev/null\n";
     system("$bwa_bin index hg19+virus.fa 2> /dev/null");
 }
 
@@ -283,7 +283,7 @@ if (!-e 'alignment.sorted.bam'){
 
 ######################## Detect virus integration sites ###############################
 
-print "Detect virus integration sites";
+print "Detect virus integration sites\n";
 
 my $ILIBs = GetIdir();
 if ($paired){
