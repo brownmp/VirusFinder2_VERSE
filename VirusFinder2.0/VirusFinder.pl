@@ -283,6 +283,8 @@ sub DetectIntegration {
         RunSensitiveMode();
         `cp $output_dir/step3/virus-corrected-seq.fa $output_dir/virus-consensus-seq.fa`;
     }else{
+        print "Running NON-Sensative Mode"
+        print "perl $ILIBs $detect_integration_script -c $config_file -o $output_dir/step3"
         system("perl $ILIBs $detect_integration_script -c $config_file -o $output_dir/step3");
     }
 

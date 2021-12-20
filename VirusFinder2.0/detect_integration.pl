@@ -105,6 +105,9 @@ GetOptions
  'fq2=s'       => \$read_file2,
 );
 
+
+print "          detect_integration.pl              "
+
 if ($help) {
    print @usage;
    exit(0);
@@ -235,6 +238,8 @@ chdir($output_dir);
 
 ################################ Align unmapped reads to hg19+virus.fa #######################################
 
+print "Align unmapped reads to hg19+virus.fa"
+
 if (!-e "hg19.fa"){
     my $blastn_index_human = $config->get_value("blastn_index_human");
     `ln -s $blastn_index_human.fa hg19.fa`
@@ -274,6 +279,8 @@ if (!-e 'alignment.sorted.bam'){
 
 ######################## Detect virus integration sites ###############################
 
+print "Detect virus integration sites"
+
 my $ILIBs = GetIdir();
 if ($paired){
     ## SVDetect
@@ -303,6 +310,8 @@ chdir $start_dir;
 
 
 ################################ Run SVDetect #######################################
+
+print "Run SVDetect"
 
 sub RunSVDetect
 {
