@@ -178,6 +178,7 @@ if (! defined $virus_sequence) {
     `ln -s $output_dir/step1/unmapped.1.fa  $output_dir/step2/` if (!-e "$output_dir/step2/unmapped.1.fa");
     `ln -s $output_dir/step1/unmapped.2.fa  $output_dir/step2/` if (-e  "$output_dir/step1/unmapped.2.fa" && !-e "$output_dir/step2/unmapped.2.fa");
 
+    print "RUNNING: perl $ILIBs $detect_virus_script -c $config_file -o $output_dir/step2 \n";
     system("perl $ILIBs $detect_virus_script -c $config_file -o $output_dir/step2");
 
     if (!-e "$output_dir/step2/results-virus.txt" ||
@@ -281,11 +282,11 @@ sub DetectIntegration {
     `ln -s $blastn_index_human.fa $output_dir/step3/hg19.fa`    if (!-e "$output_dir/step3/hg19.fa");
 
     if ($mode eq 'sensitive' && -e "$output_dir/step3/unmapped.2.fq"){
-        print "Running Sensative Mode";
+        print "Running Sensative Mode\n";
         RunSensitiveMode();
         `cp $output_dir/step3/virus-corrected-seq.fa $output_dir/virus-consensus-seq.fa`;
     }else{
-        print "Running NON-Sensative Mode";
+        print "Running NON-Sensative Mode\n";
         print "perl $ILIBs $detect_integration_script -c $config_file -o $output_dir/step3";
         system("perl $ILIBs $detect_integration_script -c $config_file -o $output_dir/step3");
     }
