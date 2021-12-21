@@ -1,0 +1,48 @@
+##########################################
+    ## Input data can be: (a) an alignment file (in BAM format); or (b) FASTQ file(s) (preferred) – for
+    ## single end data, “fastq1” is required; for paired-end, both “fastq1” and “fastq2” are needed.
+    ##########################################
+    # alignment_file = /scratch/kingw/virusFinder/simulation/simulation..bam
+    fastq1 = test1
+    fastq2 = test2
+    detect_integration = yes
+    detect_mutation = no
+    mailto = 
+    thread_no = 8
+
+    ##########################################
+    ## The full paths to the following third-party tools are required by VirusFinder:
+    ##########################################
+    blastn_bin = /usr/local/src/ncbi-blast-2.2.26+/bin/blastn
+    bowtie_bin = /usr/local/bin/bowtie2
+    bwa_bin = /usr/local/bin/bwa
+    trinity_script = /usr/local/src/trinityrnaseq_r2012-06-08/Trinity.pl
+    SVDetect_dir = /usr/local/scr/SVDetect_r0.8
+
+    ##########################################
+    ## Reference files (indexed for Bowtie2 and BLAST)
+    ##########################################
+    virus_database = /Users/mbrown/GitHub/VirusIdentification/VirusFinder2/VirusFinder2_VERSE/./virus_reference/virus.fa
+    bowtie_index_human = /Users/mbrown/GitHub/VirusIdentification/VirusFinder2/VirusFinder2_VERSE/human_reference/GRCh38.genome
+    blastn_index_human = /Users/mbrown/GitHub/VirusIdentification/VirusFinder2/VirusFinder2_VERSE/human_reference/GRCh38.genome
+    blastn_index_virus = /Users/mbrown/GitHub/VirusIdentification/VirusFinder2/VirusFinder2_VERSE/./virus_reference/virus
+
+    ##########################################
+    ## Parameters of virus insertion detection (VERSE algorithm). They are ignored for single-end data
+    ##########################################
+    detection_mode = normal
+    #If not specified, VirusFinder runs in normal detection mode.
+    flank_region_size = 4000
+    #normal, it (and ‘sensitivity_level’ below) will be ignored.
+    sensitivity_level = 1
+    #sensitivity, and accordingly more computation time.
+
+    ##########################################
+    ## Parameters of virus detection. Smaller “min_contig_length”, higher sensitivity
+    ##########################################
+    min_contig_length = 300
+    blastn_evalue_thrd = 0.05
+    similarity_thrd = 0.8
+    chop_read_length = 25
+    minIdentity = 80
+    
