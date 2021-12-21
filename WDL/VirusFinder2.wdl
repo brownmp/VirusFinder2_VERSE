@@ -234,7 +234,7 @@ workflow VirusFinder2 {
     #########################
     # Create the blast references 
     #########################
-    if(create_references) {
+    #if(create_references) {
         #call MakeVirusDataBase{
         #    input:
         #        Virus_Reference = Virus_Reference, 
@@ -244,31 +244,31 @@ workflow VirusFinder2 {
         #        docker          = docker,
         #        sample_id       = sample_id
         #}
-
-        call MakeHumanIndex{
-            input:
-                Human_Reference = Human_Reference, 
-                
-                cpus            = cpus,
-                preemptible     = preemptible,
-                docker          = docker,
-                sample_id       = sample_id
-        }
-
-        call RunVirusFinder as RunVirusFinder_references{
-            input:
-                fastq1 = left,
-                fastq2 = right,
-
-                Human_Reference = MakeHumanIndex.human_reference,
-                Virus_Reference = Virus_Reference,
-                
-                cpus            = cpus,
-                preemptible     = preemptible,
-                docker          = docker,
-                sample_id       = sample_id
-        }
-    }
+        #
+        #call MakeHumanIndex{
+        #    input:
+        #        Human_Reference = Human_Reference, 
+        #        
+        #        cpus            = cpus,
+        #        preemptible     = preemptible,
+        #        docker          = docker,
+        #        sample_id       = sample_id
+        #}
+        #
+        #call RunVirusFinder as RunVirusFinder_references{
+        #    input:
+        #        fastq1 = left,
+        #        fastq2 = right,
+        #
+        #        Human_Reference = MakeHumanIndex.human_reference,
+        #        Virus_Reference = Virus_Reference,
+        #        
+        #        cpus            = cpus,
+        #        preemptible     = preemptible,
+        #        docker          = docker,
+        #        sample_id       = sample_id
+        #}
+    #}
 
     #########################
     # run using given references 
