@@ -3,105 +3,6 @@ version 1.0
 
 
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# create the task Viral Database 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-task MakeVirusDataBase {
-    input {
-        File Virus_Reference
-
-        Int cpus
-        Int preemptible
-        String docker
-        String sample_id
-
-    }
-    command <<<
-        set -e
-
-        # Untar the references  
-        mkdir virus_reference
-        tar -xvf ~{Virus_Reference} --directory virus_reference/
-
-        cd virus_reference/
-
-        # Make blast DB
-        makeblastdb \
-            -in virus.fa \
-            -dbtype nucl \
-            -out virus
-
-        cd ..
-
-        tar -czvf virus_reference.tar.gz virus_reference
-    >>>
-
-    output {
-        File virus_reference = "virus_reference.tar.gz"
-            
-    }
-
-    runtime {
-        preemptible: preemptible
-        disks: "local-disk " + ceil(size(Virus_Reference, "GB")*3 ) + " HDD"
-        docker: docker
-        cpu: cpus
-        memory: "10GB"
-    }
-}
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Index human reference 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Make the BLAST inex for the human genome 
-task MakeHumanIndex {
-    input {
-        File Human_Reference
-
-        Int cpus
-        Int preemptible
-        String docker
-        String sample_id
-    }
-
-    command <<<
-
-        set -e
-        
-        # make directory for the human reference 
-        mkdir human_reference
-
-        # Untar the references  
-        tar -xvf ~{Human_Reference}
-
-        #~~~~~~~~~~~~~~~~
-        # Make Blast DB
-        #~~~~~~~~~~~~~~~~
-        cd human_reference
-
-        /usr/local/src/ncbi-blast-2.2.26+/bin/makeblastdb \
-            -in GRCh38.genome.fa \
-            -dbtype nucl \
-            -out GRCh38.genome
-
-        cd ..
-
-        tar -czvf human_reference.tar.gz human_reference
-    >>>
-
-    output {
-        File human_reference = "human_reference.tar.gz"
-    }
-
-    runtime {
-        preemptible: preemptible
-        disks: "local-disk " + ceil(size(Human_Reference, "GB") ) + " HDD"
-        docker: docker
-        cpu: cpus
-        memory: "10GB"
-    }
-}
-
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -143,6 +44,7 @@ task RunVirusFinder {
                 --fastq1 $fastqs[0] \
                 --fastq2 $fastqs[1]
         else 
+        
             #~~~~~~~~~~~~~~~~~~~~~~~
             # Write the configuration file
             #~~~~~~~~~~~~~~~~~~~~~~~
@@ -157,6 +59,7 @@ task RunVirusFinder {
         # For running downloaded version 
         #/usr/local/src/VirusFinder2.0/VirusFinder.pl \
         # For running commented version
+        
         /usr/local/src/VirusFinder2_VERSE/VirusFinder2.0/VirusFinder.pl \
             -c configuration.txt
 
@@ -229,45 +132,6 @@ workflow VirusFinder2 {
         docker:{help:"Docker image"}
     }
 
-
-    #########################
-    # Create the blast references 
-    #########################
-    #if(create_references) {
-        #call MakeVirusDataBase{
-        #    input:
-        #        Virus_Reference = Virus_Reference, 
-        #        
-        #        cpus            = cpus,
-        #        preemptible     = preemptible,
-        #        docker          = docker,
-        #        sample_id       = sample_id
-        #}
-        #
-        #call MakeHumanIndex{
-        #    input:
-        #        Human_Reference = Human_Reference, 
-        #        
-        #        cpus            = cpus,
-        #        preemptible     = preemptible,
-        #        docker          = docker,
-        #        sample_id       = sample_id
-        #}
-        #
-        #call RunVirusFinder as RunVirusFinder_references{
-        #    input:
-        #        fastq1 = left,
-        #        fastq2 = right,
-        #
-        #        Human_Reference = MakeHumanIndex.human_reference,
-        #        Virus_Reference = Virus_Reference,
-        #        
-        #        cpus            = cpus,
-        #        preemptible     = preemptible,
-        #        docker          = docker,
-        #        sample_id       = sample_id
-        #}
-    #}
 
     #########################
     # run using given references 
