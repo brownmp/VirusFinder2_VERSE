@@ -63,8 +63,8 @@ def main():
     blastn_index_virus = os.path.join(cwd, args.blastn_index_virus)
 
 
-    # virus_database = os.path.join(cwd, "virus_reference/virus.fa")
-    # blastn_index_virus = os.path.join(cwd, "virus_reference/virus")
+    virus_database = os.path.join(cwd, "virus_reference/virus.fa")
+    blastn_index_virus = os.path.join(cwd, "virus_reference/virus")
     # bowtie_index_human = os.path.join(cwd, "human_reference/GRCh38.genome")
     # blastn_index_human = os.path.join(cwd, "human_reference/GRCh38.genome")
 
