@@ -157,8 +157,7 @@ task RunVirusFinder {
         # For running downloaded version 
         #/usr/local/src/VirusFinder2.0/VirusFinder.pl \
         # For running commented version
-        #/usr/local/src/VirusFinder2_VERSE/VirusFinder2.0/VirusFinder.pl \
-        /usr/local/src/VirusFinder2.0/VirusFinder.pl \
+        /usr/local/src/VirusFinder2_VERSE/VirusFinder2.0/VirusFinder.pl \
             -c configuration.txt
 
     >>>
