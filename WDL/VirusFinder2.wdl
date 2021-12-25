@@ -16,7 +16,7 @@ task RunVirusFinder {
         File Human_Reference
         File Virus_Reference
 
-        Int cpuscv
+        Int cpus
         Int preemptible
         String docker
         String sample_id
