@@ -16,7 +16,7 @@ task RunVirusFinder {
         File Human_Reference
         File Virus_Reference
 
-        Int cpus
+        Int cpuscv
         Int preemptible
         String docker
         String sample_id
@@ -72,7 +72,7 @@ task RunVirusFinder {
 
     runtime {
         preemptible: preemptible
-        disks: "local-disk " + ceil(size(Virus_Reference, "GB")*8 ) + " HDD"
+        disks: "local-disk " + ceil(size(Virus_Reference, "GB") + size(Human_Reference, "GB") + size(fastq1, "GB")*4 + 50) + " HDD"
         docker: docker
         cpu: cpus
         memory: "100GB"
