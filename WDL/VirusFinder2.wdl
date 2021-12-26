@@ -41,8 +41,8 @@ task RunVirusFinder {
             # Write the configuration file
             #~~~~~~~~~~~~~~~~~~~~~~~
             python3 /usr/local/src/VirusFinder2_VERSE/write_configuration_file.py \
-                --fastq1 $fastqs[0] \
-                --fastq2 $fastqs[1]
+                --fastq1 $fastq1 \
+                --fastq2 $fastq2
         else 
         
             #~~~~~~~~~~~~~~~~~~~~~~~
