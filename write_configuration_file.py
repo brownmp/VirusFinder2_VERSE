@@ -105,7 +105,7 @@ def main():
     bowtie_bin = /usr/local/bin/bowtie2
     bwa_bin = /usr/local/bin/bwa
     trinity_script = /usr/local/src/trinityrnaseq_r2012-06-08/Trinity.pl
-    SVDetect_dir = /usr/local/scr/SVDetect_r0.8
+    SVDetect_dir = /usr/local/src/SVDetect_r0.8
 
     ##########################################
     ## Reference files (indexed for Bowtie2 and BLAST)
