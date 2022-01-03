@@ -62,7 +62,7 @@ task RunVirusFinder {
         
         #/usr/local/src/VirusFinder2_VERSE/VirusFinder2.0/VirusFinder.pl \
         /usr/local/src/VirusFinder2.0/VirusFinder.pl \
-            -c configuration.txt
+            -c configuration.txt > output.log
 
     >>>
 
