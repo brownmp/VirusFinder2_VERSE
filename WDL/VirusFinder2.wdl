@@ -34,7 +34,7 @@ task RunVirusFinder {
             mkdir fastq
             tar -I pigz -xvf ~{fastq1} -C fastq
             #fastqs=$(find fastq -type f)
-            fastqs=($(pwd)/fastq/*)
+            fastqs=(./fastq/*)
             fastq1="${fastqs[0]}"
             fastq2="${fastqs[1]}"
 
