@@ -34,7 +34,7 @@ task RunVirusFinder {
             mkdir fastq
             tar -I pigz -xvf ~{fastq1} -C fastq
             #fastqs=$(find fastq -type f)
-            fastqs=(./fastq/*)
+            fastqs=($(pwd)/fastq/*)
             fastq1="${fastqs[0]}"
             fastq2="${fastqs[1]}"
 
@@ -69,6 +69,7 @@ task RunVirusFinder {
 
     output {
         File configuration = "configuration.txt"
+        File output_log = "output.log"
     }
 
     runtime {
