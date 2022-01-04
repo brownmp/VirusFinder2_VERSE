@@ -33,9 +33,10 @@ task RunVirusFinder {
         if [[ "~{fastq1}" == *.tar.gz ]] ; then
             mkdir fastq
             tar -I pigz -xvf ~{fastq1} -C fastq
-            fastqs=$(find fastq -type f)
-            fastq1=$fastqs[0]
-            fastq2=$fastqs[1]
+            #fastqs=$(find fastq -type f)
+            fastqs=(./fastq/*)
+            fastq1="${fastqs[0]}"
+            fastq2="${fastqs[1]}"
 
             #~~~~~~~~~~~~~~~~~~~~~~~
             # Write the configuration file
