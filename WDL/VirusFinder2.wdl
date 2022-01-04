@@ -30,12 +30,12 @@ task RunVirusFinder {
         tar -xvf ~{Virus_Reference}
 
         # special case for tar of fastq files
-        if [[ "~{fastq1}" == *.tar.gz ]] ; then
+        if [[ "~{fastq1}" == *.tar.gz ]]
+        then
             mkdir fastq
-            tar -I pigz -xvf ~{fastq1} -C fastq
+            tar -xvf ~{fastq1} -C fastq
             #fastqs=$(find fastq -type f)
             fastqs=($(pwd)/fastq/*)
-            echo $fastqs
             fastq1="${fastqs[0]}"
             fastq2="${fastqs[1]}"
 
