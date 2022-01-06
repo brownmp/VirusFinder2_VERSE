@@ -34,6 +34,7 @@ task RunVirusFinder {
         then
             mkdir fastq
             tar -xvf ~{fastq1} -C fastq
+            rm ~{fastq1}
             #fastqs=$(find fastq -type f)
             fastqs=($(pwd)/fastq/*)
             fastq1="${fastqs[0]}"
@@ -71,11 +72,25 @@ task RunVirusFinder {
     output {
         File configuration = "configuration.txt"
         File output_log = "output.log"
+        File virus_txt = "virus.txt"
+        File virus_list_txt = "virus-list.txt"
+        File contig_txt = "contig.txt"
+        File? novel_contig_fa = "novel-contig.fa"
+
+        Directory step1 = "step1"
+        Directory step2 = "step2"
+        Directory step3 = "step3"
+        Directory? step4 = "step4"
+
+        #Array[File]+ step1 = glob("step1/*")
+        #Array[File]+ step2 = glob("step2/*")
+        #Array[File]+ step3 = glob("step3/*")
+        #Array[File]+ step4 = glob("step4/*")
     }
 
     runtime {
         preemptible: preemptible
-        disks: "local-disk " + ceil(size(Virus_Reference, "GB") + size(Human_Reference, "GB") + size(fastq1, "GB")*4 + 50) + " HDD"
+        disks: "local-disk " + ceil(size(Virus_Reference, "GB") + size(Human_Reference, "GB") + size(fastq1, "GB")*6 + 100) + " HDD"
         docker: docker
         cpu: cpus
         memory: "100GB"
