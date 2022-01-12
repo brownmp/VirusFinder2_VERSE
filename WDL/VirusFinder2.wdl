@@ -67,6 +67,11 @@ task RunVirusFinder {
         /usr/local/src/VirusFinder2.0/VirusFinder.pl \
             -c configuration.txt > output.log
 
+        # ompress the output directories 
+        tar -czvf step1.tar.gz step1
+        tar -czvf step2.tar.gz step2
+        tar -czvf step3.tar.gz step3
+
     >>>
 
     output {
@@ -75,17 +80,13 @@ task RunVirusFinder {
         File virus_txt = "virus.txt"
         File virus_list_txt = "virus-list.txt"
         File contig_txt = "contig.txt"
+        File integration_sites_txt = "integration-sites.txt"
         File? novel_contig_fa = "novel-contig.fa"
+        
 
-        Directory step1 = "step1"
-        Directory step2 = "step2"
-        Directory step3 = "step3"
-        Directory? step4 = "step4"
-
-        #Array[File]+ step1 = glob("step1/*")
-        #Array[File]+ step2 = glob("step2/*")
-        #Array[File]+ step3 = glob("step3/*")
-        #Array[File]+ step4 = glob("step4/*")
+        File step1 = "step1.tar.gz"
+        File step2 = "step2.tar.gz"
+        File step3 = "step3.tar.gz"
     }
 
     runtime {
