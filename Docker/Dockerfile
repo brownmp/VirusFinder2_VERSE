@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ENV WD /usr/local/src 
-ENV PATH="/usr/local/src/VirusFinder2.0:/usr/local/src/trinityrnaseq-v2.11.0:/usr/local/src/SVDetect_r0.8b/bin:/usr/local/src/bowtie2-2.4.2-linux-x86_64:/usr/local/src/ncbi-blast-2.11.0+/bin:/usr/local/src/jdk1.6.0_45/bin:${PATH}:/usr/local/src/samtools-0.1.18"
+ENV PATH="/usr/local/src/VirusFinder2.0:/usr/local/src/trinityrnaseq-v2.11.0:/usr/local/src/SVDetect_r0.8/bin:/usr/local/src/bowtie2-2.4.2-linux-x86_64:/usr/local/src/ncbi-blast-2.11.0+/bin:/usr/local/src/jdk1.6.0_45/bin:${PATH}:/usr/local/src/samtools-0.1.18"
 
 ENV SRC /usr/local/src
 ENV BIN /usr/local/bin
@@ -100,14 +100,21 @@ RUN wget --no-check-certificate https://sourceforge.net/projects/bowtie-bio/file
 # Install BWA
 #~~~~~~~~~~~~~~~~~~
 WORKDIR $SRC
-RUN wget --no-check-certificate https://sourceforge.net/projects/bio-bwa/files/bwa-0.7.17.tar.bz2 && \
-    tar xf bwa-0.7.17.tar.bz2 && \
-    cd bwa-0.7.17 && \
+#RUN wget --no-check-certificate https://sourceforge.net/projects/bio-bwa/files/bwa-0.7.17.tar.bz2 && \
+#    tar xf bwa-0.7.17.tar.bz2 && \
+#    cd bwa-0.7.17 && \
+#    make bwa && \
+#    mv bwa /usr/local/bin/ && \
+#    cd .. && \
+#    rm -rf bwa-0.7.17 bwa-0.7.17.tar.bz2
+
+RUN wget --no-check-certificate https://sourceforge.net/projects/bio-bwa/files/bwa-0.6.1.tar.bz2 && \
+    tar xf bwa-0.6.1.tar.bz2 && \
+    cd bwa-0.6.1 && \
     make bwa && \
     mv bwa /usr/local/bin/ && \
     cd .. && \
-    rm -rf bwa-0.7.17 bwa-0.7.17.tar.bz2
-
+    rm -rf bwa-0.6.1 bwa-0.6.1.tar.bz2
 
 #~~~~~~~~~~~~~~~~~~
 # Samtools
@@ -137,9 +144,9 @@ RUN cpanm --notest Config::General Tie::IxHash Parallel::ForkManager Bio::SeqIO 
 #~~~~~~~~~~~~~~~~~~
 # SVDetect
 #~~~~~~~~~~~~~~~~~~
-RUN wget --no-check-certificate https://sourceforge.net/projects/svdetect/files/SVDetect/0.80/SVDetect_r0.8b.tar.gz && \
-    tar xf SVDetect_r0.8b.tar.gz && \
-    rm SVDetect_r0.8b.tar.gz
+RUN wget --no-check-certificate https://sourceforge.net/projects/svdetect/files/SVDetect/0.80/SVDetect_r0.8.tar.gz && \
+    tar xf SVDetect_r0.8.tar.gz && \
+    rm SVDetect_r0.8.tar.gz
 
 #~~~~~~~~~~~~~~~~~~
 # Install Trinity
