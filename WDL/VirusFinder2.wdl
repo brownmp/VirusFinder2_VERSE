@@ -89,15 +89,13 @@ task RunVirusFinder {
             -c ~{configuration}
 
         perl /usr/local/src/VirusFinder2.0/preprocess.pl \
-            -c ~{configuration}
+            -c ~{configuration} \
             -v HPV16
 
 
     >>>
 
     output {
-        File configuration = "configuration.txt"
-        File output_log = "output.log"
         File virus_txt = "virus.txt"
         File virus_list_txt = "virus-list.txt"
         File contig_txt = "contig.txt"
