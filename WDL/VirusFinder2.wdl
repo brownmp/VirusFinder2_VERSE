@@ -59,11 +59,12 @@ task RunVirusFinder {
         #~~~~~~~~~~~~~~~~~~~~~~~~
         # Run Virus Finder 2
         #~~~~~~~~~~~~~~~~~~~~~~~~
-
+        echo "Running preprocessing"
         perl /usr/local/src/VirusFinder2.0/preprocess.pl \
             -c configuration.txt
 
-        perl /usr/local/src/VirusFinder2.0/preprocess.pl \
+        echo "Running Integration"
+        perl /usr/local/src/VirusFinder2.0/detect_integration.pl \
             -c configuration.txt \
             -v HPV16
 
