@@ -65,7 +65,9 @@ task RunVirusFinder {
         
         #/usr/local/src/VirusFinder2_VERSE/VirusFinder2.0/VirusFinder.pl \
         /usr/local/src/VirusFinder2.0/VirusFinder.pl \
-            -c configuration.txt > output.log
+            -c configuration.txt \
+            -virus $(pwd)/virus_reference/virus.fa \
+            > output.log
 
         # ompress the output directories 
         tar -czvf step1.tar.gz step1
