@@ -1,10 +1,20 @@
 version 1.0
 
 
-task writeConfigurationFile {
-    input{
+
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Run VirusFinder2
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+task RunVirusFinder {
+    input {
         File fastq1
         File? fastq2
+
+        File Human_Reference
+        File Virus_Reference
 
         Int cpus
         Int preemptible
@@ -14,6 +24,11 @@ task writeConfigurationFile {
 
     command <<<
         set -e
+
+        # Untar the references  
+        tar -xvf ~{Human_Reference}
+        tar -xvf ~{Virus_Reference}
+
         # special case for tar of fastq files
         if [[ "~{fastq1}" == *.tar.gz ]]
         then
@@ -40,67 +55,33 @@ task writeConfigurationFile {
                 --fastq1 ~{fastq1} \
                 --fastq2 ~{fastq2}
         fi
-    >>>
-    
-    output {
-        File configuration = "configuration.txt"
-    }
-
-    runtime {
-        preemptible: preemptible
-        disks: "local-disk " + ceil(size(fastq1, "GB")*2 + 100) + " HDD"
-        docker: docker
-        cpu: cpus
-        memory: "10GB"
-    }
-}
-
-
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Run VirusFinder2
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-task RunVirusFinder {
-    input {
-        File fastq1
-        File? fastq2
-
-        File Human_Reference
-        File Virus_Reference
-
-        File configuration
-
-        Int cpus
-        Int preemptible
-        String docker
-        String sample_id
-    }
-
-    command <<<
-        set -e
-
 
         #~~~~~~~~~~~~~~~~~~~~~~~~
         # Run Virus Finder 2
         #~~~~~~~~~~~~~~~~~~~~~~~~
 
+        perl /usr/local/src/VirusFinder2.0/preprocess.pl \
+            -c configuration.txt
 
         perl /usr/local/src/VirusFinder2.0/preprocess.pl \
-            -c ~{configuration}
-
-        perl /usr/local/src/VirusFinder2.0/preprocess.pl \
-            -c ~{configuration} \
+            -c configuration.txt \
             -v HPV16
-
 
     >>>
 
     output {
+        File configuration = "configuration.txt"
+        File output_log = "output.log"
         File virus_txt = "virus.txt"
         File virus_list_txt = "virus-list.txt"
         File contig_txt = "contig.txt"
         File integration_sites_txt = "integration-sites.txt"
         File? novel_contig_fa = "novel-contig.fa"
+        
+
+        File step1 = "step1.tar.gz"
+        File step2 = "step2.tar.gz"
+        File step3 = "step3.tar.gz"
     }
 
     runtime {
@@ -164,20 +145,6 @@ workflow VirusFinder2 {
     #########################
     # run using given references 
     #########################
-
-    call writeConfigurationFile{
-        input:
-            fastq1 = left,
-            fastq2 = right,
-            
-            cpus            = cpus,
-            preemptible     = preemptible,
-            docker          = docker,
-            sample_id       = sample_id
-
-    }
-
-
     call RunVirusFinder as RunVirusFinder{
         input:
             fastq1 = left,
@@ -185,8 +152,6 @@ workflow VirusFinder2 {
 
             Human_Reference = Human_Reference,
             Virus_Reference = Virus_Reference,
-
-            configuration   = writeConfigurationFile.configuration,
             
             cpus            = cpus,
             preemptible     = preemptible,
@@ -194,4 +159,3 @@ workflow VirusFinder2 {
             sample_id       = sample_id
     }
 }
-
