@@ -72,7 +72,7 @@ task RunVirusFinder {
 
     output {
         File configuration = "configuration.txt"
-        File output_log = "output.log"
+        #File output_log = "output.log"
         File virus_txt = "virus.txt"
         File virus_list_txt = "virus-list.txt"
         File contig_txt = "contig.txt"
