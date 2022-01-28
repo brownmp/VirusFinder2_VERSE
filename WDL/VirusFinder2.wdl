@@ -72,17 +72,14 @@ task RunVirusFinder {
 
     output {
         File configuration = "configuration.txt"
-        #File output_log = "output.log"
-        File virus_txt = "virus.txt"
-        File virus_list_txt = "virus-list.txt"
-        File contig_txt = "contig.txt"
-        File integration_sites_txt = "integration-sites.txt"
-        File? novel_contig_fa = "novel-contig.fa"
-        
+        File virus_txt = "results-virus-loci.txt"
 
-        File step1 = "step1.tar.gz"
-        File step2 = "step2.tar.gz"
-        File step3 = "step3.tar.gz"
+        #File virus_txt = "virus.txt"
+        #File virus_list_txt = "virus-list.txt"
+        #File contig_txt = "contig.txt"
+        #File integration_sites_txt = "integration-sites.txt"
+        #File? novel_contig_fa = "novel-contig.fa"
+        
     }
 
     runtime {

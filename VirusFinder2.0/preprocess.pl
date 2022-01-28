@@ -176,12 +176,15 @@ sub PreprocessFastq {
 
     print "Do alignment using Bowtie2...\n";
     if ($paired){
+        print "Running: \n\t $bowtie_bin -p $thread_no -D 15 -R 2 -N 0 -L 22 -i S,1,1.15 -x $bowtie_index_human -1 $fastq1 -2 $fastq2 -S $output_dir/alignment.sam";
        `$bowtie_bin -p $thread_no -D 15 -R 2 -N 0 -L 22 -i S,1,1.15 -x $bowtie_index_human -1 $fastq1 -2 $fastq2 -S $output_dir/alignment.sam`;
     }else{
+        print "Running: \n\t $bowtie_bin -p $thread_no -D 15 -R 2 -N 0 -L 22 -i S,1,1.15 -x $bowtie_index_human -U $fastq1 -S $output_dir/alignment.sam";
        `$bowtie_bin -p $thread_no -D 15 -R 2 -N 0 -L 22 -i S,1,1.15 -x $bowtie_index_human -U $fastq1 -S $output_dir/alignment.sam`;
     }
 
     print "Convert SAM alignment file to BAM file...\n";
+    print "Running: \n\t samtools view -bS $output_dir/alignment.sam -o $alignment_file";
     `samtools view -bS $output_dir/alignment.sam -o $alignment_file`;
 
 }
