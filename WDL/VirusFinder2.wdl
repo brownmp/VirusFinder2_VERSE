@@ -16,6 +16,8 @@ task RunVirusFinder {
         File Human_Reference
         File Virus_Reference
 
+        String Virus
+
         Int cpus
         Int preemptible
         String docker
@@ -66,13 +68,16 @@ task RunVirusFinder {
         echo "Running Integration"
         perl /usr/local/src/VirusFinder2.0/detect_integration.pl \
             -c configuration.txt \
-            -v HPV16
+            -v ~{Virus}
+
+        cp results-virus-loci.txt ~{Virus}_results-virus-loci.txt
 
     >>>
 
     output {
         File configuration = "configuration.txt"
         File virus_txt = "results-virus-loci.txt"
+        File virus_txt_output = "~{Virus}_results-virus-loci.txt"
 
         #File virus_txt = "virus.txt"
         #File virus_list_txt = "virus-list.txt"
@@ -110,6 +115,8 @@ workflow VirusFinder2 {
         #~~~~~~~~~~~~
         File left
         File? right
+
+        String Virus = "HPV16"
 
         #~~~~~~~~~~~~
         # CPU count 
@@ -150,6 +157,7 @@ workflow VirusFinder2 {
 
             Human_Reference = Human_Reference,
             Virus_Reference = Virus_Reference,
+            Virus = Virus,
             
             cpus            = cpus,
             preemptible     = preemptible,
