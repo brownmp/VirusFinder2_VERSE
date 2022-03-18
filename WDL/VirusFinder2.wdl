@@ -68,7 +68,7 @@ task RunVirusFinder {
 
         #~~~~~~~ Integrations ~~~~~~~~~~
         mkdir Output
-        IFS=', ' read -r -a array <<< ~{Virus}
+        IFS=', ' read -r -a array <<< "~{Virus}"
 
         for element in "${array[@]}"
         do
@@ -77,7 +77,7 @@ task RunVirusFinder {
                 -c configuration.txt \
                 -v $element
 
-            cp results-virus-loci.txt Output/${element}_results-virus-loci.txt
+            mv results-virus-loci.txt Output/${element}_results-virus-loci.txt
 
         done
 
