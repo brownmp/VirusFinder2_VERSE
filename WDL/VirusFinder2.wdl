@@ -65,19 +65,32 @@ task RunVirusFinder {
         perl /usr/local/src/VirusFinder2.0/preprocess.pl \
             -c configuration.txt
 
-        echo "Running Integration"
-        perl /usr/local/src/VirusFinder2.0/detect_integration.pl \
-            -c configuration.txt \
-            -v ~{Virus}
 
-        cp results-virus-loci.txt ~{Virus}_results-virus-loci.txt
+        #~~~~~~~ Integrations ~~~~~~~~~~
+        mkdir Output
+        IFS=', ' read -r -a array <<< ~{Virus}
+
+        for element in "${array[@]}"
+        do
+            echo "Running Integration: $element"
+            perl /usr/local/src/VirusFinder2.0/detect_integration.pl \
+                -c configuration.txt \
+                -v $element
+
+            cp results-virus-loci.txt Output/${element}_results-virus-loci.txt
+
+        done
+
+        tar -czf Output.tar.gz Output 
 
     >>>
 
     output {
         File configuration = "configuration.txt"
-        File virus_txt = "results-virus-loci.txt"
-        File virus_txt_output = "~{Virus}_results-virus-loci.txt"
+        File Output = "Output.tar.gz"
+        
+        #File virus_txt = "results-virus-loci.txt"
+        #File virus_txt_output = "~{Virus}_results-virus-loci.txt"
 
         #File virus_txt = "virus.txt"
         #File virus_list_txt = "virus-list.txt"
