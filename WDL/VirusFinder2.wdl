@@ -69,15 +69,21 @@ task RunVirusFinder {
         #~~~~~~~ Integrations ~~~~~~~~~~
         mkdir Output
         IFS=', ' read -r -a array <<< "~{Virus}"
-
+        
         for element in "${array[@]}"
         do
             echo "Running Integration: $element"
+
+            perl /usr/local/src/VirusFinder2.0/preprocess.pl \
+                -c configuration.txt
+
             perl /usr/local/src/VirusFinder2.0/detect_integration.pl \
                 -c configuration.txt \
                 -v $element
 
             mv results-virus-loci.txt Output/${element}_results-virus-loci.txt
+            rm hg19+* B* R* L* u* re* a* 
+            rm -r SVDetect crest
 
         done
 
